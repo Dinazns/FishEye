@@ -1,18 +1,42 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+}
+
 #contact_modal {
     display: none;
 }
 
 .photograph-header {
+    display: flex;
+    flex-direction: row;
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
 }
 
+.photograph-presentation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #e68f7c;
+    padding-left: 40px;
+    width: 250px;
+    height: 300px;
+} 
+
+
 .contact_button {
     font-size: 20px;
     font-weight: bold;
     color: white;
-    padding: 11px;
+    margin: auto;
+
     width: 170px;
     height: 70px;
     border: none;
@@ -20,6 +44,43 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+#media_section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    grid-gap: 114px;
+    justify-content: space-between;
+    padding-top: 85px;
+    margin: 0 100px;
+    margin-bottom: 100px;
+    height: auto;
+}
+
+.media_card {
+    width: 300px;
+    height: auto;
+    max-height: 400px;
+}
+
+.media_card img {
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+
+#bloc_price {
+    position: fixed;
+    bottom: 0px;
+    right: 70px;
+    z-index: 2;
+    background-color: #DB8876;
+    width: 25%;
+    height: 65px;
+}
+
+/* _______________________________________________________________________________ */
 
 .modal {
     border-radius: 5px;

@@ -11,93 +11,53 @@ async function getPhotographers() {
     return data;
 }
 
-
-
-
-
-
-
-// Récupération de l'id et des infos qui lui sont liées (de son objet)
-
-// ___________________________________________
-// const { photographers, media } = data;
-// console.log(photographers, media);
-
-// const idUserObject = photographers.find((element) => element.id === _id);
-// console.log(idUserObject);
 // ____________________________________________
 
 // Mise en place du DOM pour photographer.html
 // Récupère les propriétés de l'objet pour les mettres dans le DOM
 
-function mediaTemplate(data) {
-    const { name, id, portrait, city, country, tagline, title, image, likes, price } = data;
-
-    const picture = `assets/photographers/${portrait}`;
-
-    function getMediaCardDOM() {
-
-        const section_header = document.querySelector(".photograph-header");
-        const section = document.createElement('section')
-        const h2 = document.createElement( 'h2' );
-        h2.innerHTML += `<a href="photographer.html?id=${id}">${name}</a>`;
-        //h2.textContent = name;
-
-        const p_city_country = document.createElement('p');
-        const p_tagline = document.createElement('p');
-        //const p_price = document.createElement('p');
-
-        p_city_country.textContent = city + ", " + country;
-        p_city_country.className = 'city_color';
-        p_tagline.textContent = tagline;
-       // p_price.textContent = price + "€" + "/jour";
-        //p_price.className = 'price_color'
-
-        const img_profil = document.createElement( 'img' );
-        img_profil.setAttribute("src", picture);
+function setMediaPart(name, media) {
+	const mediaSection = document.getElementById("media_section");
+   
+	media.forEach((mediaElement) => {
+		let divCreation = document.createElement("div");
+        const picturePath = `assets/media/${name}/${mediaElement.image}`;
         
-        //section.appendChild(img);
-        section_header.appendChild(section)
-        section.appendChild(h2);
-        section.appendChild(p_city_country);
-        section.appendChild(p_tagline);
-        //section.appendChild(p_price);
+        divCreation.className = "media_card";
 
-        const media_section = document.querySelector(".media_section");
+        const img = document.createElement('img');
+        img.setAttribute("src", picturePath);
 
-        const images = `assets/media/${image}`;
-        const img_album = document.createElement('img');
-
-        img_album.setAttribute("src", images)
-
-        media_section.appendChild(img_album)
-
-        return (section, media_section);
-    }
-
-    return { name, picture, getMediaCardDOM }
+        divCreation.appendChild(img);
+        mediaSection.appendChild(divCreation);
+	});
 }
 
 // Rajoute dans le DOM (grâce à mediaTemplate et getMediaCardDOM) 
-async function displayData(photographers, media, id) {
-    const mediasSection = document.querySelector(".photograph-header");
+async function displayData(data, id) {
+    const { media, photographers } = data;
 
-    media.forEach((data) => {
-        if (data.photographerId === id) {
-            const mediaModel = mediaTemplate(data);
-            const {section} = mediaModel.getMediaCardDOM();
-            
-            mediasSection.appendChild(section);
-        }
-    });
+    const mediaObject = media.filter((media) => media.photographerId === id);
+    const photographersObject = photographers.filter((photographer) => photographer.id === id)[0];
+
+    console.log("MEDIA :", mediaObject)
+    console.log("MPHOTOGRAPHERS :", photographersObject)
+
+    let name = photographersObject.name;
+
+    document.getElementById("name").innerText = name;
+    document.getElementById("city").innerText = photographersObject.city;
+    document.getElementById("country").innerText = photographersObject.country;
+    document.getElementById("tagline").innerText = photographersObject.tagline;
+   
+    setMediaPart(name, mediaObject);
 }
 
 let _id;
 
 async function init() {
     // Récupère les datas des media
-    const { photographers, media } = await getPhotographers();
-    
+    const data = await getPhotographers();
 
     // const idUserObject = photographers.find((element) => element.id === _id);
     // console.log(idUserObject);
@@ -105,20 +65,13 @@ async function init() {
     // Extraction de l'id
     const urlSearchParams = new URL(document.location).searchParams;
     _id = parseInt(urlSearchParams.get('id'));
-    console.log(_id)
+    console.log("ID Page :", _id)
 
     if(!isNaN(_id)) {
-        // Filtrer les medias spécifiques à l'id
-        const filterMedia = media.filter((data) => data.photographerId === _id);
-
-         // Affiche les medias liés à l'id
-         console.log(filterMedia)
-        displayData(photographers, filterMedia);
+        displayData(data, _id);
     } else {
         console.error("l'id indéfini ou NaN")
     }
-
-
 }
 
 init();
