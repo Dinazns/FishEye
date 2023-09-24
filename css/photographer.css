@@ -18,18 +18,41 @@ body {
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
+    align-items: center;
+}
+
+.photograph-header img {
+    width: 200px;
+    height: 200px;
+
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.photograph-portrait {
+    padding-top: 50px;
+    padding-right: 50px;
+    width: 250px;
+    height: 250px;
+
 }
 
 .photograph-presentation {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #e68f7c;
     padding-left: 40px;
-    width: 250px;
-    height: 300px;
 } 
 
+#name {
+    color: #D3573C;
+    font-size: 40px;
+}
+
+#city, #country {
+    font-size: 20px;
+    color: #901C1C;
+} 
 
 .contact_button {
     font-size: 20px;
@@ -62,12 +85,27 @@ body {
     max-height: 400px;
 }
 
-.media_card img {
+.media_card img, video {
     width: 300px;
     height: 300px;
     border-radius: 5px;
     object-fit: cover;
 }
+
+.media_card video {
+    z-index: 1;
+}
+
+.TitleLikes_media_card {
+    display: flex;
+    justify-content: space-between;
+}
+
+.TitleLikes_media_card p {
+    font-size: 18px;
+    color: #901C1C;
+}
+
 
 
 #bloc_price {
