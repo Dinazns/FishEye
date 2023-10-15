@@ -61,11 +61,6 @@ async function displayData(data, id) {
 
     let likes_total = 0;
 
-    //Parcours et Incrémentation de like ( Somme pour le total dans bloc_price )
-    for (let i = 0; i < mediaObject.length; i++) {
-        likes_total += mediaObject[i].likes;
-    }
-
     LikesPrice(photographersObject.price, likes_total);
 }
 
@@ -98,6 +93,7 @@ function setMediaPart(name, media) {
 
             p_title.textContent = mediaElement.title;
             p_likes.textContent = mediaElement.likes;
+            p_likes.className = "p_likes";
 
             divCreation.appendChild(img);
             divCreation.appendChild(TitleLikes_media_card);
@@ -110,10 +106,11 @@ function setMediaPart(name, media) {
             const video = document.createElement("video");
             video.setAttribute("src", picturePathVideo);
             video.setAttribute("autoplay", "true");
-            video.setAttribute("controls", "true");
+            // video.setAttribute("controls", "true"); à mettre sur le carrousel lors de l'affichage de la vidéo
 
             p_title.textContent = mediaElement.title;
             p_likes.textContent = mediaElement.likes;
+            p_likes.className = "p_likes";
 
             divCreation.appendChild(video);
             divCreation.appendChild(TitleLikes_media_card);
@@ -151,37 +148,32 @@ function setMediaPart(name, media) {
 
 // (Mise en page) Affichage du nombre total de likes dans bloc_price et du TJM
 
-function LikesPrice(price, likes_total) {
-    const bloc_price = document.getElementById("bloc_price");
+function LikesPrice() {
+ 
+    let price,
+    likes_total = 0;
 
-    const p_likes = document.createElement("p");
-    const p_price = document.createElement("p");
-    const heart = document.createElement("i");
-    const bloc_likes_total = document.createElement("div");
-
-    p_price.textContent = price + "€" + "/jour";
-    p_price.className = "price_color";
-    p_price.style.color = "black";
-
-    p_likes.innerText = likes_total;
-    p_likes.className = "total_likes";
-
-    heart.className = "fa-solid fa-heart";
-    bloc_likes_total.className = "bloc_likes_total";
-
-    bloc_price.appendChild(bloc_likes_total);
-    bloc_likes_total.appendChild(p_likes);
-    bloc_likes_total.appendChild(heart);
-    bloc_price.appendChild(p_price);
+    const all_P_Likes = document.getElementsByClassName("p_likes");
+    const total = document.querySelector(".total_likes");
+    
+    for (let i = 0; i < all_P_Likes.length; i++) {
+    likes_total += parseInt(all_P_Likes[i].textContent);
+    //mise à jour du total des likes
+    total.textContent = likes_total;
+    }
 
     console.log("NUMBER OF LIKES AND PRICE :", { price, likes_total });
+    
 }
+   
 
-// Incrémentation lors du like de la photo ou de la vidéo
+// Incrémentation lors du like de la photo ou de la vidéo (like individuel)
 
 function LikePicture(like_heart, option) {
     let pParent = like_heart.parentNode.querySelector("p");
     let likesP = parseInt(pParent.textContent);
 
     pParent.innerText = (option === "add") ? likesP + 1 : likesP - 1;
+
+    LikesPrice();
 }
