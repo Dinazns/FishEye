@@ -1,10 +1,11 @@
 @import url("photographer.css");
 
-body {
-    font-family: "DM Sans", sans-serif;
+* {
+    padding: 0;
     margin: 0;
-}
 
+    font-family: "DM Sans", sans-serif;
+}
 
 header {
     display: flex;
@@ -42,7 +43,7 @@ h1 {
 
 .photographer_section article h2 {
     font-size: 36px;
-    margin-bottom: -5px;
+    margin-bottom: 5px;
 }
 
 .photographer_section article a {
@@ -59,7 +60,7 @@ h1 {
 }
 
 .photographer_section article p {
-    margin-bottom: -10px;
+    margin-bottom: 5px;
 }
 
 .city_color {

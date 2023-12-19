@@ -1,4 +1,5 @@
 // Mettre le code JavaScript lié à la page photographer.html
+// __________________________________________________________________________________
 
 // Récupère les données data (photographers + media) json
 async function getPhotographers() {
@@ -33,16 +34,14 @@ async function init() {
 
 init();
 
-// ____________________________________________
+// ___________________________________________________________________________________
 
-// Rajoute dans le DOM la partie presentation du photographe en fct de son id
+// Rajoute dans le DOM la partie presentation du photographe en fonction de son id
 async function displayData(data, id) {
     const { media, photographers } = data;
 
     const mediaObject = media.filter((media) => media.photographerId === id);
-    const photographersObject = photographers.filter(
-        (photographer) => photographer.id === id
-    )[0];
+    const photographersObject = photographers.filter((photographer) => photographer.id === id)[0];
 
     console.log("MEDIA :", mediaObject);
     console.log("PHOTOGRAPHERS :", photographersObject);
@@ -60,14 +59,42 @@ async function displayData(data, id) {
     setMediaPart(name, mediaObject);
 
     let likes_total = 0;
-
     LikesPrice(photographersObject.price, likes_total);
-}
+
+// Système de tri pour le menu déroulant 
+
+    const menu = document.getElementById('menu-select');
+    menu.addEventListener('change', function(e) {
+        // Clear toutes les images déjà présente
+        document.querySelectorAll(".media_card").forEach((media_card) => {
+            media_card.remove()
+        });
+
+        // Tri par popularité, date ou titre
+        switch (e.target.value) {
+            case "date":
+                const date_filter = mediaObject.sort((a, b) => (a.date > b.date ? 1 : -1));
+                setMediaPart(name, date_filter);
+                break;
+            case "popularite":
+                const likes_filter = mediaObject.sort((a, b) => b.likes - a.likes);
+                setMediaPart(name, likes_filter);
+                break;
+            case "titre":
+                const title_filter = mediaObject.sort((a, b) => a.title.localeCompare(b.title));
+                setMediaPart(name, title_filter);
+                break;
+            default:
+                break;
+        }
+    });
+};
 
 // Affichage de la galerie d'images et videos
 
 function setMediaPart(name, media) {
     const mediaSection = document.getElementById("media_section");
+    // let lightboxIndex = 0;
 
     media.forEach((mediaElement) => {
         let divCreation = document.createElement("div");
@@ -86,14 +113,52 @@ function setMediaPart(name, media) {
 
         bloc_likes.className = "bloc_likes";
 
+    // LIGHTBOX    _________________________________________________________
+
+    function setupLightbox() {
+        let lightboxIndex = 0;
+        const cards = Array.from(document.querySelectorAll(".media_card img, .media_card video"));
+        
+        function updateLightboxImage(sens) {
+            if (lightboxIndex !== null) {
+                lightboxIndex = (sens === "right") ? (lightboxIndex + 1) % cards.length : (lightboxIndex - 1 + cards.length) % cards.length;
+                document.querySelector('.lightBox img, .lightBox video').src = cards[lightboxIndex].src; // Met à jour la source de l'image ou de la vidéo dans la lightbox en utilisant l'index calculé
+            } else {
+                console.error("Position non trouvée");
+            }
+        }
+        
+        // Ouverture de la lightbox lors du clique sur une image ou video
+        cards.forEach((media, index) => {
+            media.addEventListener("click", () => {
+                document.querySelector('.lightBox').style.display = 'block';
+                document.querySelector('.lightBox img, .lightBox video').src = media.src;
+        
+                lightboxIndex = index;
+        
+                // Ajoutez des écouteurs d'événements pour les flèches gauche et droite
+                side_right.addEventListener('click', () => updateLightboxImage("right"));
+                side_left.addEventListener('click', () => updateLightboxImage("left"));
+            });
+        });
+        
+    }
+        
+    // Initialisation de la lightbox
+    setupLightbox();
+
         if (mediaElement.image) {
             const img = document.createElement("img");
-
             img.setAttribute("src", picturePath);
 
             p_title.textContent = mediaElement.title;
             p_likes.textContent = mediaElement.likes;
             p_likes.className = "p_likes";
+            
+            img.addEventListener("click", () => {
+                document.querySelector('.lightBox').style.display = 'block';
+                document.querySelector('.lightBox img').src = img.src;
+            });
 
             divCreation.appendChild(img);
             divCreation.appendChild(TitleLikes_media_card);
@@ -107,6 +172,13 @@ function setMediaPart(name, media) {
             video.setAttribute("src", picturePathVideo);
             video.setAttribute("autoplay", "true");
             // video.setAttribute("controls", "true"); à mettre sur le carrousel lors de l'affichage de la vidéo
+
+            // Ouverture de la lightbox lors du clique sur une video
+            video.addEventListener("click", () => {
+                document.querySelector('.lightBox').style.display = 'block';
+                document.querySelector('.lightBox video').src = picturePathVideo;
+                // video.setAttribute("controls", "true");
+            });
 
             p_title.textContent = mediaElement.title;
             p_likes.textContent = mediaElement.likes;
@@ -148,8 +220,7 @@ function setMediaPart(name, media) {
 
 // (Mise en page) Affichage du nombre total de likes dans bloc_price et du TJM
 
-function LikesPrice() {
- 
+function LikesPrice() { 
     let price,
     likes_total = 0;
 
@@ -162,8 +233,7 @@ function LikesPrice() {
     total.textContent = likes_total;
     }
 
-    console.log("NUMBER OF LIKES AND PRICE :", { price, likes_total });
-    
+    console.log("NUMBER OF LIKES AND PRICE :", { price, likes_total });    
 }
    
 

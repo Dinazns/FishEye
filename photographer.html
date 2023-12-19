@@ -1,73 +1,121 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="assets/favicon.png" />
+        <link
+            href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        />
 
-	<head>
-		<link href="css/style.css" rel="stylesheet" type="text/css" />
-		<meta charset="utf-8">
-		<link rel="icon" type="image/png" href="assets/favicon.png">
-		<link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <title>Fisheye - photographe</title>
+    </head>
 
-		<title>Fisheye - photographe </title>
-	</head>
+    <body>
+        <header>
+            <a href="index.html"><img src="assets/images/logo.png" class="logo" alt="logo Fisheye" /></a>
+        </header>
 
-	<body>
-		<header>
-			<img src="assets/images/logo.png" class="logo" alt="logo Fisheye"/>
-		</header>
+        <main id="main">
+            <div class="photograph-header">
+                <div class="photograph-presentation">
+                    <h1 id="name"></h1>
 
-		<main id="main">
-			<div class="photograph-header">
-				<div class="photograph-presentation">
-					<h1 id="name"></h1>
-					
-					<p>
-						<span id="city"></span>, <span id="country"></span>
-					</p>
+                    <p><span id="city"></span>, <span id="country"></span></p>
 
-					<p id="tagline"></p>
-				</div>
+                    <p id="tagline"></p>
+                </div>
 
-				<button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-				
-				<div class="photograph-portrait">
-					<img id="img_portrait" src="" alt="">
-				</div>
-			</div>
+                <button class="contact_button" onclick="displayModal()">
+                    Contactez-moi
+                </button>
 
-			<div id="media_section"></div>
-      		
-			<div id="bloc_price">
-				<div class="group-likeHeart">
-					<p class="total_likes"></p>
-					<i class="fa-solid fa-heart"></i>
-				</div>
-				<div class="photog_price">
-					<p class="priceParJour">867</p>
-					<span>€ / jour</span>
-				</div>
-			</div>
-			
-		</main>
+                <div class="photograph-portrait">
+                    <img id="img_portrait" src="" alt="" />
+                </div>
+            </div>
 
-		<div id="contact_modal">
-			<div class="modal">
-				<header>
-					<h2 aria-label="Bouton contactez-moi">Contactez-moi</h2>
-					<img src="assets/icons/close.svg" onclick="closeModal()" />
-				</header>
+            <div class="menu_burger">
+                <label class="menu_tri" for="menu-select">Trier par </label>
 
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
-					</div>
-					<button class="contact_button">Envoyer</button>
-				</form>
-			</div>
-		</div>
+                <select name="menu" id="menu-select">
+                    <option id="popularite" value="popularite">Popularité</option>
+                    <option id="date" value="date">Date</option>
+                    <option id="titre" value="titre">Titre</option>
+                </select>
+            </div>        
 
-		<script src="/scripts/pages/photographer.js"></script>
-		<script src="/scripts/utils/contactForm.js"></script>
-	</body>
+            <div id="media_section"></div>
+
+            <div class="lightBox">
+                <div class="whiteBox">
+                    <span class="x">&times;</span>
+
+                    <div class="side">
+                        <span class="side_left"><</span>
+                        <img src="" />   
+                        <video src=""></video>            
+                        <span class="side_right">></span>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div id="bloc_price">
+                <div class="group-likeHeart">
+                    <p class="total_likes"></p>
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="photog_price">
+                    <p class="priceParJour">867</p>
+                    <span>€ / jour</span>
+                </div>
+            </div>
+        </main>
+
+        <div id="contact_modal">
+            <div class="modal">
+                <header>
+                    <h2 aria-label="Formulaire contactez-moi">Contactez-moi</h2>
+                    <img src="assets/icons/close.svg" onclick="closeModal()" />
+                </header>
+
+                <form method="POST" id="myForm">
+                    <div>
+                        <div>
+                            <label for="firstname">Prénom</label>
+                            <input type="text" name="firstname" id="firstname" />
+							<p class="error"></p>
+                        </div>                        
+
+                        <div>
+                            <label for="lastname">Nom</label>
+                            <input type="text" name="lastname" id="lastname" />
+							<p class="error"></p>
+                        </div>
+
+                        <div>
+                            <label for="email">E-mail</label>
+                            <input type="email" name="email" id="email" />
+							<p class="error"></p>
+                        </div>
+
+                        <label for="message">Message</label>
+                        <input type="text" name="message" id="message" />
+                    </div>
+
+                    <button class="contact_buttonForm" type="submit">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </body>
+
+	<script src="/scripts/pages/photographer.js"></script>
+    <script src="/scripts/utils/contactForm.js"></script>
+    <script src="/scripts/utils/lightBox.js"></script>
 </html>
