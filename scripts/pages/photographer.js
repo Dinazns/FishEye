@@ -26,6 +26,8 @@ async function init() {
     if (!isNaN(_id)) {
         photographerInfo(data, _id);
         mediaLength = data.length;
+        photographerInfo(data, _id);
+        mediaLength = data.length;
     } else {
         console.error("l'id indéfini ou NaN");
     }
@@ -36,6 +38,8 @@ console.log(mediaLength);
 // Rajoute dans le DOM la partie presentation du photographe en fonction de son id
 async function photographerInfo(data, id) {
     const { media, photographers } = data;
+    profile(photographers,id);
+    showMedia(media,id);
 
     const photographersObject = photographers.filter((photographer) => photographer.id === id)[0];
     let name = photographersObject.name;
