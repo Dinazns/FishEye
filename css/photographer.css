@@ -162,14 +162,20 @@ body {
     gap: 10px;
 }
 
-.photog_price {
+/* .photog_price {
     display: flex;
     align-items: center;
+} */
+
+.priceParJour {
+    color: red;
+    width: 100%;
+    font-size: 20px;
 }
 
 /* _______________________________________________________________________________ */
 
-main .lightBox {
+main #lightBox {
     display: none;
     position: fixed;
     top: 0; left: 0;
@@ -179,7 +185,7 @@ main .lightBox {
     z-index: 100;
 }
 
-main .lightBox .whiteBox {
+main #lightBox .whiteBox {
     display: block;
     position: fixed;
     top: 50%; left: 50%;
@@ -190,7 +196,7 @@ main .lightBox .whiteBox {
     z-index: 1;
 } 
 
-main .lightBox .x {
+main #lightBox .x {
     margin-left: 95%;
     font-size: 60px;
     font-weight: bolder;
@@ -208,7 +214,7 @@ main .side {
     cursor: pointer;    
 }
 
-main .lightBox img {
+main #lightBox img {
     position: absolute;
     
     top: 50%; left: 50%;
@@ -218,7 +224,7 @@ main .lightBox img {
     object-fit: cover;
 }
 
-main .lightBox video {
+main #lightBox video {
     position: absolute;
     
     top: 50%; left: 50%;
