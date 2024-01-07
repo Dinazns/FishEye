@@ -10,7 +10,7 @@ async function getPhotographers() {
     return data;
 }
 
-let mediaLength = 0;
+var mediaPosition = 0;
 const mediaSection = document.getElementById("media_section");
 let _id;
 
@@ -25,13 +25,11 @@ async function init() {
 
     if (!isNaN(_id)) {
         photographerInfo(data, _id);
-        mediaLength = data.length;
     } else {
         console.error("l'id indéfini ou NaN");
+        window.location.href = "/";
     }
 }
-console.log(mediaLength);
-
 
 // Rajoute dans le DOM la partie presentation du photographe en fonction de son id
 async function photographerInfo(data, id) {
@@ -46,8 +44,7 @@ async function photographerInfo(data, id) {
 
 };
 
-function profile(photographersObject){
-    
+function profile(photographersObject) {   
     let name = photographersObject.name;
     
     document.getElementById("name").innerText = name;
@@ -72,57 +69,125 @@ function showMedia(name, media){
         mediaCard.className = "media_card";
 
         const lightBox = document.getElementsByClassName("side");
+        const mElement = document.querySelector("div.media_element");
         lightBox.innerHTML = '';
 
+        const titleLikes = document.createElement("div");
+        titleLikes.className = "TitleLikes_media_card";
+
+        const p_title = document.createElement("p");
+        const p_likes = document.createElement("p");
+        const bloc_likes = document.createElement("div");
+        bloc_likes.className = "bloc_likes";
+
         if (mediaElement.image) {
+            // mElement.innerHTML = '';
+            console.log(mElement);
             const img = document.createElement("img");
             img.setAttribute("src", `assets/media/${name}/${mediaElement.image}`);
+            
+            p_title.textContent = mediaElement.title;
+            p_likes.textContent = mediaElement.likes;
+            p_likes.className = "p_likes";
+
             img.addEventListener('click', () => {
-                document.querySelector('#lightBox').style.display = 'block';
-                document.querySelector('#lightBox img').src = img.src;
+                mediaPosition = index;
+                document.querySelector('#lightBox').style.display = 'block'; // Ouverture de la lightbox
+                // document.querySelector('#lightBox img').src = img.src;
+
+                const prevChild = document.querySelector('.mediaClass');
                 const imgBox = document.createElement("img");
                 imgBox.setAttribute("src", `assets/media/${name}/${mediaElement.image}`);
-                lightBox.appendChild(imgBox);
+                imgBox.setAttribute("class","mediaClass");
+
+                if(prevChild!=null || undefined) {
+                    mElement.removeChild(prevChild);
+                }
+
+                mElement.appendChild(imgBox);
             })
+
+            mediaCard.appendChild(titleLikes);
+            titleLikes.appendChild(p_title);
+            titleLikes.appendChild(bloc_likes);
+            bloc_likes.appendChild(p_likes);
+
             // img.setAttribute("alt", mediaElement.title);
             mediaCard.appendChild(img);
-            
-
         } else if (mediaElement.video) {
             const video = document.createElement("video");
             video.setAttribute("src", `assets/media/${name}/${mediaElement.video}`);
+
+            p_title.textContent = mediaElement.title;
+            p_likes.textContent = mediaElement.likes;
+            p_likes.className = "p_likes";
             // video.setAttribute("controls", "false"); // Ajouter les contrôles pour la vidéo
             video.addEventListener('click', () => {
-                document.querySelector('#lightBox').style.display = 'block';
-                document.querySelector('#lightBox video').src = video.src;
+                mediaPosition = index;
+                document.querySelector('#lightBox').style.display = 'block'; // Ouverture de la lightbox
+                // document.querySelector('#lightBox video').src = video.src;
+                const prevChildVideo = document.querySelector('.mediaClass');
+                
                 const videoBox = document.createElement("video");
                 videoBox.setAttribute("src", `assets/media/${name}/${mediaElement.video}`);
-                video.setAttribute("controls", "true"); // Ajout des contrôles pour la vidéo
-                lightBox.appendChild(video);
+                videoBox.setAttribute("controls", "true"); // Ajout des contrôles pour la vidéo
+                videoBox.setAttribute("class", "mediaClass");
+
+                if (prevChildVideo!=null || undefined) {
+                    mElement.removeChild(prevChildVideo);
+                }
+
+                console.log("videoBox");
+                mElement.appendChild(videoBox);
             })
+
+            mediaCard.appendChild(titleLikes);
+            titleLikes.appendChild(p_title);
+            titleLikes.appendChild(bloc_likes);
+            bloc_likes.appendChild(p_likes);
+
             mediaCard.appendChild(video);
-            
         }
 
         // Ajout du titre et du nombre de likes sous chaque media cards
-        const titleLikes = document.createElement("div");
-        titleLikes.className = "TitleLikes_media_card";
-        titleLikes.innerHTML = `
-            <p>${mediaElement.title}</p>
-            <div class="bloc_likes">
-                <p class="p_likes">${mediaElement.likes}</p>
-                <i class="fa-regular fa-heart"></i>
-                <i class="fa-solid fa-heart"></i>
-            </div>
-        `;
+        // const titleLikes = document.createElement("div");
+        // titleLikes.className = "TitleLikes_media_card";
+        // titleLikes.innerHTML = `
+        //     <p>${mediaElement.title}</p>
+        //     <div class="bloc_likes">
+        //         <p class="p_likes">${mediaElement.likes}</p>
+        //         <i class="fa-regular fa-heart"></i>
+        //     </div>
+        // `;
 
+        // bloc_likes.className = "bloc_likes";
+        
+        // Mise en place du coeur (affichage)
+
+        const heart = document.createElement("i");
+
+        heart.className = "fa-regular fa-heart";
+        heart.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            if (e.target.classList.toString().includes("fa-regular")) {
+                e.target.classList.remove("fa-regular");
+                e.target.classList.add("fa-solid");
+
+                LikePicture(e.target, "add");
+            } else {
+                e.target.classList.remove("fa-solid");
+                e.target.classList.add("fa-regular");
+
+                LikePicture(e.target, "remove");
+            }
+        });
 
         mediaCard.appendChild(titleLikes);
-
+        bloc_likes.appendChild(heart);
         // Ajout de la carte média à la section média
         mediaSection.appendChild(mediaCard);
     });
-
-
 }
+
 init();
