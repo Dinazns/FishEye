@@ -42,6 +42,9 @@ async function photographerInfo(data, id) {
     
     showMedia(name, media);
 
+    let likes_total = 0;
+    LikesPrice(photographersObject.price, likes_total);
+
 };
 
 function profile(photographersObject) {   
@@ -58,6 +61,9 @@ function profile(photographersObject) {
     const priceParJourElement = document.getElementById("priceParJour");
     priceParJourElement.innerText = `${photographersObject.price} € / jour`;
     console.log(priceParJourElement);
+
+    
+    
 }
 
 function showMedia(name, media){
@@ -188,6 +194,36 @@ function showMedia(name, media){
         // Ajout de la carte média à la section média
         mediaSection.appendChild(mediaCard);
     });
+
+    // Système de tri pour le menu déroulant 
+
+    const menu = document.getElementById('menu-select');
+    menu.addEventListener('change', function(e) {
+        // Clear toutes les images déjà présente
+        document.querySelectorAll(".media_card").forEach((media_card) => {
+            media_card.remove()
+        });
+
+        // Tri par popularité, date ou titre
+        switch (e.target.value) {
+            case "date":
+                const date_filter = mediaObject.sort((a, b) => (a.date > b.date ? 1 : -1));
+                showMedia(name, date_filter);
+                break;
+            case "popularite":
+                const likes_filter = mediaObject.sort((a, b) => b.likes - a.likes);
+                showMedia(name, likes_filter);
+                break;
+            case "titre":
+                const title_filter = mediaObject.sort((a, b) => a.title.localeCompare(b.title));
+                showMedia(name, title_filter);
+                break;
+            default:
+                break;
+        }
+    });
+
 }
+
 
 init();
