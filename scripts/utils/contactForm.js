@@ -18,26 +18,26 @@ function showError(fieldId, message) {
     container.querySelector(".error").innerText = message;
 }
 
-// Sélectionnez le formulaire
+// Sélectionne le formulaire
 let myForm = document.getElementById("myForm");
 
-// Écoutez l'événement de soumission du formulaire
+// Écoute l'événement de soumission du formulaire
 myForm.addEventListener('submit', function(e) {
     e.preventDefault();
     let error = false;
 
-    // Réinitialisez tous les messages d'erreur
+    // Réinitialise tous les messages d'erreur
     const errorElements = document.getElementsByClassName('error');
     Array.from(errorElements).forEach((e) => {
         e.innerText = "";
     });
 
-    // Récupérez les valeurs des champs
+    // Récupére les valeurs des champs
     const firstname = document.getElementById("firstname").value.trim();
     const lastname = document.getElementById("lastname").value.trim();
     const email = document.getElementById("email").value.trim();
 
-    // Vérifiez chaque champ individuellement
+    // Vérifie chaque champ individuellement
     if (firstname === "") {
         error = true;
         showError("firstname", "Veuillez saisir votre prénom correctement");

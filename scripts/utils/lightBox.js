@@ -14,6 +14,8 @@ function updateLightboxImage(sens) {
     const cards = Array.from(document.querySelectorAll(".media_card"));
     const containerLightbox = document.querySelector('.media_element');
 
+    // mettre les evenements de clique left et right au clavier
+
     if (sens === "right") {
         mediaPosition = (mediaPosition + 1) % cards.length;
     } else if (sens === "left") {
@@ -38,7 +40,7 @@ function updateLightboxImage(sens) {
     }
 
     if(cards[mediaPosition].childNodes[0].nodeName.toLowerCase() === "video") {
-        // Si ma lightbox contient une balise qui n'est pas de type image
+        // Si ma lightbox contient une balise qui n'est pas de type video
         if(containerLightbox.childNodes[1].nodeName.toLowerCase() !== "video") {
             containerLightbox.querySelector('img').remove();
 

@@ -27,4 +27,3 @@ function LikePicture(like_heart, option) {
 
     LikesPrice();
 }
-

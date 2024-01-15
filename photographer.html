@@ -18,7 +18,7 @@
 
     <body>
         <header>
-            <a href="index.html"><img src="assets/images/logo.png" class="logo" alt="logo Fisheye" /></a>
+            <a href="index.html"><img src="assets/images/logo.png" class="logo" alt="fisheye home page" /></a>
         </header>
 
         <main id="main">
@@ -31,7 +31,7 @@
                     <p id="tagline"></p>
                 </div>
 
-                <button class="contact_button" onclick="displayModal()">
+                <button class="contact_button" onclick="displayModal()" aria-label="Contact Me">
                     Contactez-moi
                 </button>
 
@@ -53,17 +53,17 @@
             <div id="media_section"></div>
 
             <div id="lightBox">
-                <div class="whiteBox">
-                    <span class="x">&times;</span>
+                <div class="whiteBox" aria-label="image closeup view">
+                    <span class="x" aria-label="close dialog">&times;</span>
 
                     <div class="side">
-                        <span class="side_left"><</span>
+                        <span class="side_left" aria-label="previous image"><</span>
                         <!-- <img src="" />   
                         <video src="" muted autoplay controls></video>             -->
                         <div class="media_element">
 
                         </div>
-                        <span class="side_right">></span>
+                        <span class="side_right" aria-label="next image">></span>
                     </div>
                     
                 </div>

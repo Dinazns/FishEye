@@ -10,6 +10,31 @@ async function getPhotographers() {
     return data;
 }
 
+// Gestion des sélections au clavier - accessibilité
+
+document.addEventListener("keydown", (key) => {
+    const lightBoxOpen = document.querySelector('#lightBox').style.display == 'block';
+    // console.log(key)
+
+    if(key.key === "Enter" ) {
+        document.activeElement.click();
+    }
+
+    if (lightBoxOpen && key.key === "ArrowLeft") {
+        const side_left = document.querySelector('.side_left');
+        side_left.click();
+    }
+
+    if (lightBoxOpen && key.key === "ArrowRight") {
+        const side_right = document.querySelector('.side_right');
+        side_right.click();
+    } 
+    if (lightBoxOpen && key.key === "Escape") {
+        document.querySelector('#lightBox').style.display = 'none';
+    }
+});
+
+
 var mediaPosition = 0;
 const mediaSection = document.getElementById("media_section");
 let _id;
@@ -60,9 +85,7 @@ function profile(photographersObject) {
     // Mis à jour du prix par jour du photographe
     const priceParJourElement = document.getElementById("priceParJour");
     priceParJourElement.innerText = `${photographersObject.price} € / jour`;
-    console.log(priceParJourElement);
-
-    
+    console.log(priceParJourElement);  
     
 }
 
@@ -72,7 +95,7 @@ function showMedia(name, media){
 
     mediaObject.forEach((mediaElement, index) => {
         const mediaCard = document.createElement("div");
-        mediaCard.className = "media_card";
+        mediaCard.className = "media_card";     
 
         const lightBox = document.getElementsByClassName("side");
         const mElement = document.querySelector("div.media_element");
@@ -87,11 +110,12 @@ function showMedia(name, media){
         bloc_likes.className = "bloc_likes";
 
         if (mediaElement.image) {
-            // mElement.innerHTML = '';
+            
             console.log(mElement);
             const img = document.createElement("img");
             img.setAttribute("src", `assets/media/${name}/${mediaElement.image}`);
-            
+            img.tabIndex = 0;
+
             p_title.textContent = mediaElement.title;
             p_likes.textContent = mediaElement.likes;
             p_likes.className = "p_likes";
@@ -99,26 +123,25 @@ function showMedia(name, media){
             img.addEventListener('click', () => {
                 mediaPosition = index;
                 document.querySelector('#lightBox').style.display = 'block'; // Ouverture de la lightbox
-                // document.querySelector('#lightBox img').src = img.src;
-
+               
                 const prevChild = document.querySelector('.mediaClass');
                 const imgBox = document.createElement("img");
                 imgBox.setAttribute("src", `assets/media/${name}/${mediaElement.image}`);
                 imgBox.setAttribute("class","mediaClass");
+                imgBox.setAttribute("aria-label", "lilac breasted roller")
 
                 if(prevChild!=null || undefined) {
                     mElement.removeChild(prevChild);
                 }
 
                 mElement.appendChild(imgBox);
-            })
+            })            
 
             mediaCard.appendChild(titleLikes);
             titleLikes.appendChild(p_title);
             titleLikes.appendChild(bloc_likes);
             bloc_likes.appendChild(p_likes);
 
-            // img.setAttribute("alt", mediaElement.title);
             mediaCard.appendChild(img);
         } else if (mediaElement.video) {
             const video = document.createElement("video");
@@ -127,17 +150,18 @@ function showMedia(name, media){
             p_title.textContent = mediaElement.title;
             p_likes.textContent = mediaElement.likes;
             p_likes.className = "p_likes";
-            // video.setAttribute("controls", "false"); // Ajouter les contrôles pour la vidéo
+
             video.addEventListener('click', () => {
                 mediaPosition = index;
                 document.querySelector('#lightBox').style.display = 'block'; // Ouverture de la lightbox
-                // document.querySelector('#lightBox video').src = video.src;
-                const prevChildVideo = document.querySelector('.mediaClass');
                 
+                const prevChildVideo = document.querySelector('.mediaClass');                
                 const videoBox = document.createElement("video");
+                
                 videoBox.setAttribute("src", `assets/media/${name}/${mediaElement.video}`);
                 videoBox.setAttribute("controls", "true"); // Ajout des contrôles pour la vidéo
                 videoBox.setAttribute("class", "mediaClass");
+                videoBox.setAttribute("aria-label", "lilac breasted roller")
 
                 if (prevChildVideo!=null || undefined) {
                     mElement.removeChild(prevChildVideo);
@@ -155,24 +179,12 @@ function showMedia(name, media){
             mediaCard.appendChild(video);
         }
 
-        // Ajout du titre et du nombre de likes sous chaque media cards
-        // const titleLikes = document.createElement("div");
-        // titleLikes.className = "TitleLikes_media_card";
-        // titleLikes.innerHTML = `
-        //     <p>${mediaElement.title}</p>
-        //     <div class="bloc_likes">
-        //         <p class="p_likes">${mediaElement.likes}</p>
-        //         <i class="fa-regular fa-heart"></i>
-        //     </div>
-        // `;
-
-        // bloc_likes.className = "bloc_likes";
-        
         // Mise en place du coeur (affichage)
 
         const heart = document.createElement("i");
 
         heart.className = "fa-regular fa-heart";
+        heart.setAttribute("aria-label", "likes")
         heart.addEventListener("click", (e) => {
             e.preventDefault();
 
@@ -222,8 +234,6 @@ function showMedia(name, media){
                 break;
         }
     });
-
 }
-
 
 init();
