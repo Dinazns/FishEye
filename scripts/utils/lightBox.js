@@ -14,7 +14,7 @@ function updateLightboxImage(sens) {
     const cards = Array.from(document.querySelectorAll(".media_card"));
     const containerLightbox = document.querySelector('.media_element');
 
-    // mettre les evenements de clique left et right au clavier
+    // mets les evenements de clique left et right au clavier
 
     if (sens === "right") {
         mediaPosition = (mediaPosition + 1) % cards.length;

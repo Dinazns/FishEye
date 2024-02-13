@@ -1,15 +1,12 @@
 // Affichage des photographes sur la page d'accueil
-
 function photographerTemplate(data) {
     const { name, id, portrait, city, country, tagline, price } = data;
-
     const picture = `assets/photographers/${portrait}`;
-
     function getUserCardDOM() {
         const article = document.createElement( 'article' );
         const img = document.createElement( 'img' );
         img.src = picture;
-        img.setAttribute("alt", name);
+        img.setAttribute("alt", `La photo de ${name}`);
         
         const h2 = document.createElement( 'h2' );
         h2.innerHTML += `<a href="photographer.html?id=${id}">${name}</a>`;
@@ -32,6 +29,5 @@ function photographerTemplate(data) {
         article.appendChild(p_price);
         return (article);
     }
-
     return { name, picture, getUserCardDOM }
 }

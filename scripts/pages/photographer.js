@@ -14,7 +14,7 @@ async function getPhotographers() {
 
 document.addEventListener("keydown", (key) => {
     const lightBoxOpen = document.querySelector('#lightBox').style.display == 'block';
-    // console.log(key)
+    const contact_modal = document.querySelector('#contact_modal').style.display == 'block';
 
     if(key.key === "Enter" ) {
         document.activeElement.click();
@@ -31,6 +31,9 @@ document.addEventListener("keydown", (key) => {
     } 
     if (lightBoxOpen && key.key === "Escape") {
         document.querySelector('#lightBox').style.display = 'none';
+    }
+    if (contact_modal && key.key === "Escape") {
+        document.querySelector('#contact_modal').style.display = 'none';
     }
 });
 
@@ -69,7 +72,6 @@ async function photographerInfo(data, id) {
 
     let likes_total = 0;
     LikesPrice(photographersObject.price, likes_total);
-
 };
 
 function profile(photographersObject) {   
@@ -81,12 +83,13 @@ function profile(photographersObject) {
     document.getElementById("tagline").innerText = photographersObject.tagline;
     const portrait = `./assets/photographers/${photographersObject.portrait}`;
     document.getElementById("img_portrait").setAttribute("src", portrait);
+    document.getElementById("img_portrait").setAttribute("alt", `La photo de ${name}`);
+    
 
     // Mis à jour du prix par jour du photographe
     const priceParJourElement = document.getElementById("priceParJour");
     priceParJourElement.innerText = `${photographersObject.price} € / jour`;
-    console.log(priceParJourElement);  
-    
+    console.log(priceParJourElement);      
 }
 
 function showMedia(name, media){
@@ -115,6 +118,7 @@ function showMedia(name, media){
             const img = document.createElement("img");
             img.setAttribute("src", `assets/media/${name}/${mediaElement.image}`);
             img.tabIndex = 0;
+            img.setAttribute("alt", `La photo de ${mediaElement.title}`);
 
             p_title.textContent = mediaElement.title;
             p_likes.textContent = mediaElement.likes;
@@ -146,6 +150,7 @@ function showMedia(name, media){
         } else if (mediaElement.video) {
             const video = document.createElement("video");
             video.setAttribute("src", `assets/media/${name}/${mediaElement.video}`);
+            video.setAttribute("alt", `La video de ${mediaElement.title}`);
 
             p_title.textContent = mediaElement.title;
             p_likes.textContent = mediaElement.likes;
@@ -162,6 +167,7 @@ function showMedia(name, media){
                 videoBox.setAttribute("controls", "true"); // Ajout des contrôles pour la vidéo
                 videoBox.setAttribute("class", "mediaClass");
                 videoBox.setAttribute("aria-label", "lilac breasted roller")
+                
 
                 if (prevChildVideo!=null || undefined) {
                     mElement.removeChild(prevChildVideo);
