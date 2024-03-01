@@ -111,80 +111,43 @@ function showMedia(name, media){
         const p_likes = document.createElement("p");
         const bloc_likes = document.createElement("div");
         bloc_likes.className = "bloc_likes";
-
+        const mediaData = factoryMedia(mediaElement,name);
+        p_title.textContent = mediaElement.title;
+        p_likes.textContent = mediaElement.likes;
+        p_likes.className = "p_likes";
         if (mediaElement.image) {
-            
-            console.log(mElement);
-            const img = document.createElement("img");
-            img.setAttribute("src", `assets/media/${name}/${mediaElement.image}`);
-            img.tabIndex = 0;
-            img.setAttribute("alt", `La photo de ${mediaElement.title}`);
-
-            p_title.textContent = mediaElement.title;
-            p_likes.textContent = mediaElement.likes;
-            p_likes.className = "p_likes";
-
-            img.addEventListener('click', () => {
+            mediaData.addEventListener('click', () => {
                 mediaPosition = index;
                 document.querySelector('#lightBox').style.display = 'block'; // Ouverture de la lightbox
-               
-                const prevChild = document.querySelector('.mediaClass');
+                //const prevChild = document.querySelector('.mediaClass');
                 const imgBox = document.createElement("img");
                 imgBox.setAttribute("src", `assets/media/${name}/${mediaElement.image}`);
                 imgBox.setAttribute("class","mediaClass");
                 imgBox.setAttribute("aria-label", "lilac breasted roller")
-
-                if(prevChild!=null || undefined) {
-                    mElement.removeChild(prevChild);
-                }
-
+                removeAllElement(mElement);
                 mElement.appendChild(imgBox);
-            })            
-
-            mediaCard.appendChild(titleLikes);
-            titleLikes.appendChild(p_title);
-            titleLikes.appendChild(bloc_likes);
-            bloc_likes.appendChild(p_likes);
-
-            mediaCard.appendChild(img);
-        } else if (mediaElement.video) {
-            const video = document.createElement("video");
-            video.setAttribute("src", `assets/media/${name}/${mediaElement.video}`);
-            video.setAttribute("alt", `La video de ${mediaElement.title}`);
-
-            p_title.textContent = mediaElement.title;
-            p_likes.textContent = mediaElement.likes;
-            p_likes.className = "p_likes";
-
-            video.addEventListener('click', () => {
+            })  
+        }else if(mediaElement.video){
+            mediaData.addEventListener('click', () => {
                 mediaPosition = index;
                 document.querySelector('#lightBox').style.display = 'block'; // Ouverture de la lightbox
-                
-                const prevChildVideo = document.querySelector('.mediaClass');                
+                //const prevChildVideo = document.querySelector('.mediaClass');                
                 const videoBox = document.createElement("video");
-                
                 videoBox.setAttribute("src", `assets/media/${name}/${mediaElement.video}`);
                 videoBox.setAttribute("controls", "true"); // Ajout des contrôles pour la vidéo
                 videoBox.setAttribute("class", "mediaClass");
                 videoBox.setAttribute("aria-label", "lilac breasted roller")
-                
-
-                if (prevChildVideo!=null || undefined) {
-                    mElement.removeChild(prevChildVideo);
-                }
-
-                console.log("videoBox");
+                removeAllElement(mElement);
                 mElement.appendChild(videoBox);
             })
-
-            mediaCard.appendChild(titleLikes);
-            titleLikes.appendChild(p_title);
-            titleLikes.appendChild(bloc_likes);
-            bloc_likes.appendChild(p_likes);
-
-            mediaCard.appendChild(video);
         }
+        mediaCard.appendChild(titleLikes);
+        titleLikes.appendChild(p_title);
+        titleLikes.appendChild(bloc_likes);
+        bloc_likes.appendChild(p_likes);
+        mediaCard.appendChild(mediaData);            
 
+     
         // Mise en place du coeur (affichage)
 
         const heart = document.createElement("i");
@@ -241,5 +204,27 @@ function showMedia(name, media){
         }
     });
 }
-
+function factoryMedia(media,name){
+    if (media.image) {
+        const img = document.createElement("img");
+        img.setAttribute("src", `assets/media/${name}/${media.image}`);
+        img.tabIndex = 0;
+        img.setAttribute("alt", `La photo de ${media.title}`);
+        return img;
+    }else if (media.video) {
+        const video = document.createElement("video");
+        video.setAttribute("src", `assets/media/${name}/${media.video}`);
+        video.setAttribute("alt", `La video de ${media.title}`);
+        return video;
+    }else{
+        return null;
+    }
+}
+function removeAllElement(mElement){
+    const childs = mElement.children.length;
+    for (let i = 0; i < childs; i++) {
+        mElement.removeChild(mElement.children[i]);
+      
+    }
+}
 init();

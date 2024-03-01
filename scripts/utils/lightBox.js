@@ -21,9 +21,10 @@ function updateLightboxImage(sens) {
     } else if (sens === "left") {
         mediaPosition = (mediaPosition - 1 + cards.length) % cards.length;
     }
-
+    console.log(cards);
     // Récupère le nom de la balise contenant mon image ou ma vidéo
     if(cards[mediaPosition].childNodes[0].nodeName.toLowerCase() === "img") {
+        console.log(cards[mediaPosition].childNodes[0]);
         // Si ma lightbox contient une balise qui n'est pas de type image
         if(containerLightbox.childNodes[1].nodeName.toLowerCase() !== "img") {
             containerLightbox.querySelector('video').remove();
@@ -40,6 +41,7 @@ function updateLightboxImage(sens) {
     }
 
     if(cards[mediaPosition].childNodes[0].nodeName.toLowerCase() === "video") {
+        console.log(cards[mediaPosition].childNodes[0]);
         // Si ma lightbox contient une balise qui n'est pas de type video
         if(containerLightbox.childNodes[1].nodeName.toLowerCase() !== "video") {
             containerLightbox.querySelector('img').remove();
