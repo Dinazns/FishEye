@@ -86,7 +86,7 @@ function profile(photographersObject) {
     document.getElementById("img_portrait").setAttribute("alt", `La photo de ${name}`);
     
 
-    // Mis à jour du prix par jour du photographe
+    // Mise à jour du prix par jour du photographe
     const priceParJourElement = document.getElementById("priceParJour");
     priceParJourElement.innerText = `${photographersObject.price} € / jour`;
     console.log(priceParJourElement);      
@@ -132,7 +132,7 @@ function showMedia(name, media){
                 const imgBox = document.createElement("img");
                 imgBox.setAttribute("src", `assets/media/${name}/${mediaElement.image}`);
                 imgBox.setAttribute("class","mediaClass");
-                imgBox.setAttribute("aria-label", "lilac breasted roller")
+                imgBox.setAttribute("alt", "media image")
 
                 if(prevChild!=null || undefined) {
                     mElement.removeChild(prevChild);
@@ -150,7 +150,7 @@ function showMedia(name, media){
         } else if (mediaElement.video) {
             const video = document.createElement("video");
             video.setAttribute("src", `assets/media/${name}/${mediaElement.video}`);
-            video.setAttribute("alt", `La video de ${mediaElement.title}`);
+            video.setAttribute("title", `La video de ${mediaElement.title}`);
 
             p_title.textContent = mediaElement.title;
             p_likes.textContent = mediaElement.likes;
@@ -162,11 +162,11 @@ function showMedia(name, media){
                 
                 const prevChildVideo = document.querySelector('.mediaClass');                
                 const videoBox = document.createElement("video");
-                
+                console.log("je suis la");
                 videoBox.setAttribute("src", `assets/media/${name}/${mediaElement.video}`);
                 videoBox.setAttribute("controls", "true"); // Ajout des contrôles pour la vidéo
                 videoBox.setAttribute("class", "mediaClass");
-                videoBox.setAttribute("aria-label", "lilac breasted roller")
+                videoBox.setAttribute("title", "media video");
                 
 
                 if (prevChildVideo!=null || undefined) {
@@ -187,7 +187,7 @@ function showMedia(name, media){
 
         // Mise en place du coeur (affichage)
 
-        const heart = document.createElement("i");
+        const heart = document.createElement("span");
 
         heart.className = "fa-regular fa-heart";
         heart.setAttribute("aria-label", "likes")
