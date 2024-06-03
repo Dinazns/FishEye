@@ -1,3 +1,8 @@
+/*eslint no-global-assign: "error"*/
+/*global likes_total:writable*/
+
+
+
 // Affichage du total des likes de la page
 
 function LikesPrice() { 
@@ -19,7 +24,7 @@ function LikesPrice() {
 
 // Incrémentation lors du like de la photo ou de la vidéo (like individuel)
 
-function LikePicture(like_heart, option) {
+function LikePicture(like_heart, option) { // eslint-disable-line no-unused-vars
     let pParent = like_heart.parentNode.querySelector("p");
     let likesP = parseInt(pParent.textContent);
 

@@ -1,3 +1,6 @@
+/*eslint no-global-assign: "error"*/
+/*global mediaPosition:writable*/
+
 const side_left = document.querySelector('.side_left');
 const side_right = document.querySelector('.side_right');
 

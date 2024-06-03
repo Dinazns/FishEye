@@ -1,3 +1,4 @@
+/*global photographerTemplate*/
 async function getPhotographers() {
     let data = await fetch("/data/photographers.json")
         .then((res) => res.json())

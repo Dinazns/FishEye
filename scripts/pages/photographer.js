@@ -1,3 +1,5 @@
+/*global LikesPrice*/
+/*global LikePicture*/
 // Récupère les données data (photographers + media) json
 async function getPhotographers() {
     let data = await fetch("/data/photographers.json")
@@ -38,7 +40,7 @@ document.addEventListener("keydown", (key) => {
 });
 
 
-var mediaPosition = 0;
+var mediaPosition = 0; // eslint-disable-line no-unused-vars
 const mediaSection = document.getElementById("media_section");
 let _id;
 
@@ -187,18 +189,21 @@ function showMedia(name, media){
 
         // Tri par popularité, date ou titre
         switch (e.target.value) {
-            case "date":
+            case "date": {
                 const date_filter = mediaObject.sort((a, b) => (a.date > b.date ? 1 : -1));
                 showMedia(name, date_filter);
                 break;
-            case "popularite":
+            }
+            case "popularite": {
                 const likes_filter = mediaObject.sort((a, b) => b.likes - a.likes);
                 showMedia(name, likes_filter);
                 break;
-            case "titre":
+            }
+            case "titre": {
                 const title_filter = mediaObject.sort((a, b) => a.title.localeCompare(b.title));
                 showMedia(name, title_filter);
                 break;
+            }
             default:
                 break;
         }

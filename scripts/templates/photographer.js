@@ -1,5 +1,5 @@
 // Affichage des photographes sur la page d'accueil
-function photographerTemplate(data) {
+function photographerTemplate(data) { // eslint-disable-line no-unused-vars
     const { name, id, portrait, city, country, tagline, price } = data;
     const picture = `assets/photographers/${portrait}`;
     function getUserCardDOM() {
