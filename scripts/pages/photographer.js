@@ -37,6 +37,7 @@ document.addEventListener("keydown", (key) => {
     if (contact_modal && key.key === "Escape") {
         document.querySelector('#contact_modal').style.display = 'none';
     }
+
 });
 
 

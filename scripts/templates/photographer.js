@@ -7,6 +7,9 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
         const img = document.createElement( 'img' );
         img.src = picture;
         img.setAttribute("alt", `La photo de ${name}`);
+        img.addEventListener('click', () => {
+            window.location.href = `photographer.html?id=${id}`;
+        });
         
         const h2 = document.createElement( 'h2' );
         h2.innerHTML += `<a href="photographer.html?id=${id}">${name}</a>`;

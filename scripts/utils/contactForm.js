@@ -4,6 +4,8 @@
 function displayModal() { // eslint-disable-line no-unused-vars
     const modal = document.getElementById("contact_modal");
 	modal.style.display = "block";
+    modal.setAttribute('aria-hidden', 'false');
+    document.getElementById("firstname").focus();
 }
 
 // Fermeture du formulaire
@@ -24,7 +26,7 @@ let myForm = document.getElementById("myForm");
 
 // Écoute l'événement de soumission du formulaire
 myForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+    // e.preventDefault();
     let error = false;
 
     // Réinitialise tous les messages d'erreur
@@ -54,5 +56,15 @@ myForm.addEventListener('submit', function(e) {
         showError("email", "Veuillez saisir votre email correctement");
     }
 
-    if(!error) myForm.submit();    
+    // if(!error) myForm.submit();   
+    
+    // Affiche les données du formulaire s'il n'y a pas d'erreur
+    if (!error) {
+        console.log("DONNEES DU FORMULAIRE :");
+        console.log(" Prénom : " + firstname);
+        console.log(" Nom : " + lastname);
+        console.log(" Email : " + email);
+    } else {
+        e.preventDefault();
+    }
 });
