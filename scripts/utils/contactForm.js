@@ -26,7 +26,7 @@ let myForm = document.getElementById("myForm");
 
 // Écoute l'événement de soumission du formulaire
 myForm.addEventListener('submit', function(e) {
-    // e.preventDefault();
+    e.preventDefault();
     let error = false;
 
     // Réinitialise tous les messages d'erreur
@@ -39,6 +39,7 @@ myForm.addEventListener('submit', function(e) {
     const firstname = document.getElementById("firstname").value.trim();
     const lastname = document.getElementById("lastname").value.trim();
     const email = document.getElementById("email").value.trim();
+    const messageForm = document.getElementById("message").value;
 
     // Vérifie chaque champ individuellement
     if (firstname === "") {
@@ -64,7 +65,8 @@ myForm.addEventListener('submit', function(e) {
         console.log(" Prénom : " + firstname);
         console.log(" Nom : " + lastname);
         console.log(" Email : " + email);
-    } else {
-        e.preventDefault();
-    }
+        console.log(" Message : " + messageForm);
+     } // else {
+    //     e.preventDefault();
+    // }
 });
